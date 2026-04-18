@@ -1,0 +1,136 @@
+workflows:
+  build-all:
+    name: Build All Platforms
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      dart: stable
+
+    scripts:
+      - name: Flutter version
+        script: |
+          flutter --version
+      
+      - name: Install dependencies
+        script: |
+          flutter pub get
+      
+      - name: Analyze code
+        script: |
+          flutter analyze --no-fatal-infos
+      
+      - name: Build debug APK (Android)
+        script: |
+          flutter build apk --debug
+      
+      - name: Build iOS Simulator
+        script: |
+          flutter build ios --simulator --no-codesign
+      
+      - name: Build macOS
+        script: |
+          flutter build macos
+      
+      - name: Build Linux
+        script: |
+          flutter build linux
+      
+      - name: Build Windows
+        script: |
+          flutter build windows
+      
+      - name: Build Web
+        script: |
+          flutter build web
+    
+    artifacts:
+      - build/app/outputs/flutter-apk/**/*.apk
+      - build/app/outputs/ios-simulator/*.app
+      - build/macos/Build/Products/Release/*.app
+      - build/linux/x64/release/bundle/*
+      - build/windows/x64/release/Release/*.exe
+      - build/web/**/*
+
+  build-android:
+    name: Build Android APK
+    max_build_duration: 30
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Flutter version
+        script: flutter --version
+      
+      - name: Install dependencies
+        script: flutter pub get
+      
+      - name: Analyze
+        script: flutter analyze --no-fatal-infos
+      
+      - name: Build debug APK
+        script: flutter build apk --debug
+      
+      - name: Build release APK
+        script: flutter build apk --release
+    
+    artifacts:
+      - build/app/outputs/flutter-apk/**/*.apk
+
+  build-ios:
+    name: Build iOS
+    max_build_duration: 60
+    environment:
+      flutter: stable
+      xcode: latest
+      cocoapods: default
+
+    scripts:
+      - name: Flutter version
+        script: flutter --version
+      
+      - name: Install dependencies
+        script: flutter pub get
+      
+      - name: Analyze
+        script: flutter analyze --no-fatal-infos
+      
+      - name: Build for simulator
+        script: flutter build ios --simulator --no-codesign
+    
+    artifacts:
+      - build/app/outputs/ios-simulator/*.app
+
+  test:
+    name: Run Tests
+    max_build_duration: 30
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Install dependencies
+        script: flutter pub get
+      
+      - name: Run tests
+        script: flutter test
+    
+    artifacts:
+      - test/**/*.xml
+
+  web:
+    name: Build Web
+    max_build_duration: 30
+    environment:
+      flutter: stable
+
+    scripts:
+      - name: Flutter version
+        script: flutter --version
+      
+      - name: Install dependencies
+        script: flutter pub get
+      
+      - name: Build for web
+        script: flutter build web
+    
+    artifacts:
+      - build/web/**/*
