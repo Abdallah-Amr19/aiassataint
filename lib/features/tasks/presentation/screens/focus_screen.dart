@@ -96,9 +96,17 @@ class _FocusScreenState extends State<FocusScreen> {
     const androidSettings = AndroidInitializationSettings(
       '@mipmap/ic_launcher',
     );
-    const initSettings = InitializationSettings(android: androidSettings);
+    const iosSettings = DarwinInitializationSettings(
+      requestAlertPermission: true,
+      requestBadgePermission: true,
+      requestSoundPermission: true,
+    );
+    const initSettings = InitializationSettings(
+      android: androidSettings,
+      iOS: iosSettings,
+    );
 
-    await flutterLocalNotificationsPlugin.initialize(initSettings);
+    await flutterLocalNotificationsPlugin.initialize(settings: initSettings);
 
     const androidDetails = AndroidNotificationDetails(
       'focus_timer',
@@ -112,10 +120,10 @@ class _FocusScreenState extends State<FocusScreen> {
     const details = NotificationDetails(android: androidDetails);
 
     await flutterLocalNotificationsPlugin.show(
-      0,
-      'Focus Complete! 🎯',
-      'Great work! Time for a break.',
-      details,
+      id: 0,
+      title: 'Focus Complete! 🎯',
+      body: 'Great work! Time for a break.',
+      notificationDetails: details,
     );
   }
 
