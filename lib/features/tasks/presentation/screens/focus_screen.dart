@@ -78,7 +78,7 @@ class _FocusScreenState extends State<FocusScreen> {
           ],
         ),
         content: Text(
-          'Great job! You completed ${_sessionsCompleted} session${_sessionsCompleted > 1 ? 's' : ''} today.',
+          'Great job! You completed $_sessionsCompleted session${_sessionsCompleted > 1 ? 's' : ''} today.',
         ),
         actions: [
           ElevatedButton(
@@ -202,7 +202,7 @@ class _FocusScreenState extends State<FocusScreen> {
             ),
             if (!_isRunning)
               Text(
-                '${_selectedMinutes} min session',
+                '$_selectedMinutes min session',
                 style: TextStyle(fontSize: 16, color: AppColors.textSecondary),
               ),
           ],
@@ -333,7 +333,7 @@ class _FocusScreenState extends State<FocusScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                '${_sessionsCompleted} sessions',
+                '$_sessionsCompleted sessions',
                 style: const TextStyle(
                   fontSize: 18,
                   fontWeight: FontWeight.bold,
